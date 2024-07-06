@@ -11,19 +11,35 @@ class RockPaperScissorsGame:
 
         self.user_score = 0
         self.computer_score = 0
+        self.round_number = 1
 
-        self.label = tk.Label(master, text="Choose rock, paper, or scissors:")
-        self.label.pack()
+        self.create_widgets()
+        self.update_score()
 
-        self.choice_var = tk.StringVar()
-        self.entry = tk.Entry(master, textvariable=self.choice_var)
-        self.entry.pack()
+    def create_widgets(self):
+        self.header_label = tk.Label(self.master, text="Rock-Paper-Scissors", font=("Helvetica", 16))
+        self.header_label.pack(pady=10)
 
-        self.play_button = tk.Button(master, text="Play", command=self.play_round)
-        self.play_button.pack()
+        self.round_label = tk.Label(self.master, text=f"Round {self.round_number}", font=("Helvetica", 12))
+        self.round_label.pack(pady=5)
 
-        self.score_label = tk.Label(master, text=f"Score: You {self.user_score} - {self.computer_score} Computer")
-        self.score_label.pack()
+        self.button_frame = tk.Frame(self.master)
+        self.button_frame.pack(pady=10)
+
+        self.rock_button = tk.Button(self.button_frame, text="Rock", command=lambda: self.play_round("rock"))
+        self.rock_button.grid(row=0, column=0, padx=10)
+
+        self.paper_button = tk.Button(self.button_frame, text="Paper", command=lambda: self.play_round("paper"))
+        self.paper_button.grid(row=0, column=1, padx=10)
+
+        self.scissors_button = tk.Button(self.button_frame, text="Scissors", command=lambda: self.play_round("scissors"))
+        self.scissors_button.grid(row=0, column=2, padx=10)
+
+        self.score_label = tk.Label(self.master, text="", font=("Helvetica", 12))
+        self.score_label.pack(pady=10)
+
+        self.reset_button = tk.Button(self.master, text="Restart Game", command=self.reset_game)
+        self.reset_button.pack(pady=10)
 
     def get_computer_choice(self):
         return random.choice(self.choices)
@@ -38,12 +54,7 @@ class RockPaperScissorsGame:
         else:
             return "computer"
 
-    def play_round(self):
-        user_choice = self.choice_var.get().strip().lower()
-        if user_choice not in self.choices:
-            messagebox.showerror("Error", "Invalid choice. Please choose rock, paper, or scissors.")
-            return
-
+    def play_round(self, user_choice):
         computer_choice = self.get_computer_choice()
 
         winner = self.determine_winner(user_choice, computer_choice)
@@ -57,12 +68,21 @@ class RockPaperScissorsGame:
             result = "Computer wins this round!"
             self.computer_score += 1
 
-        messagebox.showinfo("Round Result", f"Computer chose: {computer_choice.capitalize()}\n{result}")
+        messagebox.showinfo("Round Result", f"You chose: {user_choice.capitalize()}\n"
+                                            f"Computer chose: {computer_choice.capitalize()}\n\n{result}")
 
+        self.round_number += 1
         self.update_score()
 
     def update_score(self):
+        self.round_label.config(text=f"Round {self.round_number}")
         self.score_label.config(text=f"Score: You {self.user_score} - {self.computer_score} Computer")
+
+    def reset_game(self):
+        self.user_score = 0
+        self.computer_score = 0
+        self.round_number = 1
+        self.update_score()
 
 def main():
     root = tk.Tk()
