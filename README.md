@@ -1,4 +1,4 @@
-1. Download the game.py and the three images file to your machine.
+1. Download the game.py and the three images files to your machine.
 2. place the game.py in a folder name "rockpaperscissors" and place all three images in a folder named "Images" which should be located inside the "rockpaperscissors" 
    folder.
 3. Open the commandline and transfer the control to the folder in which the game is located.
