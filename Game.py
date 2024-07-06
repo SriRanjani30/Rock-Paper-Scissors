@@ -7,7 +7,7 @@ class RockPaperScissorsGame:
     def __init__(self, master):
         self.master = master
         self.master.title("Rock-Paper-Scissors Game")
-        self.master.geometry("400x500")
+        self.master.geometry("400x550")
         self.master.config(bg="lightblue")
 
         self.choices = ["rock", "paper", "scissors"]
@@ -19,10 +19,15 @@ class RockPaperScissorsGame:
         self.create_widgets()
         self.update_score()
 
+        # Bind keys for quick selection
+        self.master.bind('r', lambda event: self.play_round("rock"))
+        self.master.bind('p', lambda event: self.play_round("paper"))
+        self.master.bind('s', lambda event: self.play_round("scissors"))
+
     def load_image(self, filepath, size):
         try:
             img = Image.open(filepath)
-            img = img.resize(size, Image.Resampling.LANCZOS)  # Use LANCZOS for high-quality resizing
+            img = img.resize(size, Image.LANCZOS)
             return ImageTk.PhotoImage(img)
         except Exception as e:
             print(f"Error loading image {filepath}: {e}")
@@ -55,6 +60,9 @@ class RockPaperScissorsGame:
 
         self.reset_button = tk.Button(self.master, text="Restart Game", font=("Helvetica", 12), command=self.reset_game)
         self.reset_button.pack(pady=10)
+
+        self.exit_button = tk.Button(self.master, text="Exit Game", font=("Helvetica", 12), command=self.master.quit)
+        self.exit_button.pack(pady=10)
 
     def get_computer_choice(self):
         return random.choice(self.choices)
