@@ -6,3 +6,4 @@
 
 ![Screenshot (3457)](https://github.com/user-attachments/assets/463ca4dc-1ed6-4693-aa77-9c21fdec4efa)
 
+[Latest Release](https://github.com/SriRanjani30/Rock-Paper-Scissor/releases/latest)
